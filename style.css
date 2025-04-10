@@ -54,7 +54,7 @@
     outline: none;
   }
   
-    .botao {
+    botao {
     padding: 12px 24px;
     font-size: 16px;
     background-color: #2196f3;
@@ -66,13 +66,9 @@
     margin-bottom: 20px;
   }
   
-    .botao:hover {
+    botao:hover {
     background-color: #1976d2;
   }
   
-  #resultado {
-    margin-top: 15px;
-    color: #333;
-    font-size: 1rem;
-  }
+  
   
