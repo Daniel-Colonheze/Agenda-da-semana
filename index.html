@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela da semana</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body class="body">
     <h1 class="inicio">Agenda da semana</h1>   
@@ -22,47 +21,34 @@
             </tr>
         </thead>
         <tbody id="corpo-tabela"></tbody>
-        <script class="javascript">
-            const diasSemana = [
-              "Segunda-feira", "Terça-feira", "Quarta-feira",
-              "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"
-            ];
-          
-            const numeroDeLinhas = 1; 
-            const tbody = document.getElementById("corpo-tabela");
-          
-            for (let i = 0; i < numeroDeLinhas; i++) { //da para fazer com mais de uma linha 
-              const tr = document.createElement("tr");
-          
-              diasSemana.forEach(dia => {
+    </table>
+
+    <button class="botao" onclick="salvarAfazeres()">Salvar Tarefas</button>
+    <div id="resultado"></div> 
+
+    <script>
+        const diasSemana = [
+            "Segunda-feira", "Terça-feira", "Quarta-feira",
+            "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"
+        ];
+
+        const numeroDeLinhas = 1; 
+        const tbody = document.getElementById("corpo-tabela");
+
+        for (let i = 0; i < numeroDeLinhas; i++) {
+            const tr = document.createElement("tr");
+
+            diasSemana.forEach(dia => {
                 const td = document.createElement("td");
                 const input = document.createElement("input");
                 input.type = "text";
                 input.placeholder = dia;
                 td.appendChild(input);
                 tr.appendChild(td);
-              });
-          
-              tbody.appendChild(tr);
-
-            }
-            
-          </script>          
-    </table>
-    <button class="botao" onclick="salvarAfazeres()">Salvar Tarefas</button>
-
-    <div id="resultado"></div> 
-    <script>
-        function salvarAfazeres() {
-            const inputs = document.querySelectorAll('tbody input');
-            const resultados = [];
-            inputs.forEach(input => {
-                resultados.push(input.value);
             });
-            document.getElementById('resultado').innerText = resultados.join(', ');
+
+            tbody.appendChild(tr);
         }
     </script>
-    
-    </main>
 </body>
 </html>
