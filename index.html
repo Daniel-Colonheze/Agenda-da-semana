@@ -31,24 +31,70 @@
             "Segunda-feira", "Terça-feira", "Quarta-feira",
             "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"
         ];
-
+    
         const numeroDeLinhas = 1; 
         const tbody = document.getElementById("corpo-tabela");
-
-        for (let i = 0; i < numeroDeLinhas; i++) {
-            const tr = document.createElement("tr");
-
-            diasSemana.forEach(dia => {
-                const td = document.createElement("td");
-                const input = document.createElement("input");
-                input.type = "text";
-                input.placeholder = dia;
-                td.appendChild(input);
-                tr.appendChild(td);
-            });
-
-            tbody.appendChild(tr);
+    
+        // Função para criar a tabela
+        function criarTabela() {
+            for (let i = 0; i < numeroDeLinhas; i++) {
+                const tr = document.createElement("tr");
+    
+                diasSemana.forEach((dia, diaIndex) => {
+                    const td = document.createElement("td");
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.placeholder = dia;
+    
+                    // Recupera do localStorage se tiver algo salvo
+                    const tarefasSalvas = JSON.parse(localStorage.getItem("tarefasSalvas")) || {};
+                    if (tarefasSalvas[dia]) {
+                        input.value = tarefasSalvas[dia];
+                    }
+    
+                    td.appendChild(input);
+                    tr.appendChild(td);
+                });
+    
+                tbody.appendChild(tr);
+            }
         }
-    </script>
+    
+        criarTabela(); 
+    
+        function salvarAfazeres() {
+            const linhas = tbody.querySelectorAll("tr");
+            const tarefas = {};
+            let resultadoHTML = "<h2>Tarefas salvas:</h2><ul>";
+    
+            linhas.forEach((linha) => {
+                const inputs = linha.querySelectorAll("input");
+                inputs.forEach((input, i) => {
+                    const tarefa = input.value.trim();
+                    if (tarefa !== "") {
+                        tarefas[diasSemana[i]] = tarefa;
+                        resultadoHTML += `<li><strong>${diasSemana[i]}:</strong> ${tarefa}</li>`;
+                    }
+                });
+            });
+    
+            localStorage.setItem("tarefasSalvas", JSON.stringify(tarefas));
+            resultadoHTML += "</ul>";
+            document.getElementById("resultado").innerHTML = resultadoHTML;
+        }
+    
+        window.onload = () => {
+            const salvas = JSON.parse(localStorage.getItem("tarefasSalvas"));
+            if (salvas) {
+                let resultadoHTML = "<h2>Tarefas salvas:</h2><ul>";
+                for (const dia in salvas) {
+                    resultadoHTML += `<li><strong>${dia}:</strong> ${salvas[dia]}</li>`;
+                }
+                resultadoHTML += "</ul>";
+                document.getElementById("resultado").innerHTML = resultadoHTML;
+            }
+        };
+    </script>    
+    
 </body>
 </html>
